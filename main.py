@@ -20,7 +20,7 @@ def Menu():
   if choice == '1': Add_booking()
   elif choice == '2': Edit_booking()
   elif choice == '3': Cancel_booking()
-  elif choice == '4': pass
+  elif choice == '4': View_booking()
   elif choice == '5': pass
   else: Close_app()
 

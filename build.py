@@ -22,7 +22,8 @@ def Add_booking():
       entry = Event.if_data_exists(data)
       if entry: 
         print('\nSPAM EVENT PREVENTION. THE APPLICATION DOES NOT ALLOW SIMILAR EVENT NAME WITH THE SAME PERSONAL DATA')
-        print(Utility.gen_manifest(entry))
+        print('THE BELOW ACCOUNT IS MOST LIKELY YOU. JUST CREATE ANOTHER EVENT NAME')
+        print(Utility.gen_manifest(entry, 2))
         if ask_again(): continue
         else: return        
       else: break
@@ -59,7 +60,7 @@ def Edit_booking():
 
       data = (username, phone, event_name, 'Pending')
       entry = Event.if_data_exists(data)
-      if entry: 
+      if entry:
         print(Utility.gen_manifest(entry))
         break
       else:
@@ -92,6 +93,7 @@ def Edit_booking():
     elif ask_again(): continue
     else: break
 
+# QUIT APPLICATION FUNCTION
 def Close_app():
   prompt = "\nALL CHANGES MADE HAS BEEN BACKED UP\nDO YOU WANT TO CLOSE APP? (Y/N)"
   if Utility.proceed(prompt): 
@@ -99,6 +101,7 @@ def Close_app():
     sys.exit()
   else: return
 
+# CANCEL BOOKING IN TABLE
 def Cancel_booking():
   while True:
     username = Booking.get_username()
@@ -124,3 +127,18 @@ def Cancel_booking():
       print('CANCELLING PROCESSES...')
       return
   
+def View_booking():
+  prompt_1 = '''
+    1. VIEW ALL
+    2. FILTER BY DATE
+    3. FILTER BY TIME SLOT
+    4. FILTER BY HALL NUMBER
+  '''
+  prompt_2 = "SEARCH BOOKING TABLE BY"
+  options = [str(i) for i in range(1, 5)]
+
+  choice = Utility.option_menu(options, prompt_1, prompt_2)
+  if choice == '1': View.View_all_entries()
+  elif choice == '2': print('FILTER BY DATE')
+  elif choice == '3': print('FILTER BY TIME SLOT')
+  else: print('FILTER BY HALL NUMBER')

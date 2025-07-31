@@ -37,14 +37,22 @@ class Event:
     elif entry_2: return entry_2
     else: return None
   
+  # EDIT EVENT BOOKING
   def edit_event(self, details):
     with self.database as db:
       db.execute('''UPDATE bookings SET Date = ?, Time_slot = ?, Hall_no = ?
         WHERE (User_name = ? AND Phone_no = ? AND Event_name = ? AND Event_status = ?)''', details)
     print('BOOKING EDITED SUCCESSFULLY')
   
+  # CANCEL EVENT BOOKING
   def cancel_event(self, details):
     with self.database as db:
       db.execute('''UPDATE bookings SET Event_status = Cancelled
         WHERE WHERE (User_name = ? AND Phone_no = ? AND Event_name = ? AND Event_status = ?)''', details)
     print('EVENT CANCELLED SUCCESSFULLY')
+
+  # VIEW ALL BOOKINGS IN TABLE
+  def view_all(self):
+    with self.database as db:
+      entries = db.execute('SELECT * FROM bookings').fetchall()
+    return entries
