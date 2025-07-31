@@ -40,3 +40,9 @@ class Utility:
       count = data_list.index(data) + 1
       output += f'{count}>\n{self.gen_manifest(data, 2)}'
     return output
+
+  def ask_again(self):
+    if self.proceed('\nWOULD YOU LIKE TO RE-ENTER DATA (Y/N)'): return True
+    else: 
+        print('CANCELLING PROCESSES...')
+        return False

@@ -2,7 +2,9 @@ import re
 import datetime
 from .utility import Utility
 
-class Booking(Utility):
+utility = Utility()
+
+class Booking():
 
   def __init__(self):
     self.data_warning = "\nPLEASE ENSURE THAT THE ENTERED DATA IS CORRECT"
@@ -13,9 +15,9 @@ class Booking(Utility):
       print(self.data_warning)
       username = input('\nADD A USERNAME: ').strip().capitalize()
 
-      if self.check_len(username, 3, 20): continue
+      if utility.check_len(username, 3, 20): continue
       else: 
-        if self.proceed(self.proceed_prompt): return username
+        if utility.proceed(self.proceed_prompt): return username
         else: continue
 
   def get_phone(self):
@@ -27,7 +29,7 @@ class Booking(Utility):
       if not re.fullmatch(r'(070|080|081|090|091)\d{8}', phone):
         print('INVALID PHONE NUMBER')
       else: 
-        if self.proceed(self.proceed_prompt): return phone
+        if utility.proceed(self.proceed_prompt): return phone
         else: continue
 
   def get_event_name(self):
@@ -35,9 +37,9 @@ class Booking(Utility):
       print(self.data_warning)
       event_name = input('\nADD AN EVENT NAME: ').strip().capitalize()
 
-      if self.check_len(event_name, 3, 20): continue
+      if utility.check_len(event_name, 3, 20): continue
       else: 
-        if self.proceed(self.proceed_prompt): return event_name
+        if utility.proceed(self.proceed_prompt): return event_name
         else: continue
 
   def get_date(self):
@@ -87,7 +89,7 @@ class Booking(Utility):
 
       date = f'{year}-{int(month):02}-{int(day):02}'
       print(f'CHOSEN DATE: {date}\n')
-      if self.proceed(self.proceed_prompt): return f'{year}-{int(month):02}-{int(day):02}'
+      if utility.proceed(self.proceed_prompt): return f'{year}-{int(month):02}-{int(day):02}'
       else: continue
 
   def get_time_slot(self):
@@ -101,14 +103,14 @@ class Booking(Utility):
     options = [str(i) for i in range(1, 5)]
 
     while True:
-      time_slot = self.option_menu(options, prompt_1, prompt_2)
+      time_slot = utility.option_menu(options, prompt_1, prompt_2)
 
       if time_slot == '1': time_slot = 'Morning'
       elif time_slot == '2': time_slot = 'Afternoon'
       elif time_slot == '3': time_slot = 'Evening'
       else: time_slot = 'All-day'
 
-      if self.proceed(self.proceed_prompt): return time_slot
+      if utility.proceed(self.proceed_prompt): return time_slot
       else: continue
 
   def get_hall_number(self):
@@ -117,7 +119,7 @@ class Booking(Utility):
     options = [str(i) for i in range(1, 11)]
 
     while True:
-      hall_no = self.option_menu(options, prompt_1, prompt_2)
+      hall_no = utility.option_menu(options, prompt_1, prompt_2)
 
-      if self.proceed(self.proceed_prompt): return hall_no
+      if utility.proceed(self.proceed_prompt): return hall_no
       else: continue

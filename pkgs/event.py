@@ -1,5 +1,4 @@
 import sqlite3
-# from utility import Utility
 
 class Event:
   
@@ -31,7 +30,12 @@ class Event:
   def if_date_exists(self, details):
     with self.database as db:
       entry_1 = db.execute('SELECT * FROM bookings WHERE (Date = ? AND Time_slot = ? AND Hall_no = ? AND Event_status = ?)', details[0]).fetchone()
-      entry_2 = db.execute('SELECT * FROM bookings WHERE (Date = ? AND Time_slot = ? AND Hall_no = ? AND Event_status = ?)', details[1]).fetchone()
+
+      # STILL LOKKING FOR A BETTER COMPARISON FOR DATE IN BUILD.PY
+      if 'All-day' in details[0]:
+        entry_2 = db.execute('SELECT * FROM bookings WHERE (Date = ? AND Hall_no = ? AND Event_status = ?)', details[2]).fetchone()
+      else:
+        entry_2 = db.execute('SELECT * FROM bookings WHERE (Date = ? AND Time_slot = ? AND Hall_no = ? AND Event_status = ?)', details[1]).fetchone()
 
     if entry_1: return entry_1
     elif entry_2: return entry_2
@@ -48,11 +52,17 @@ class Event:
   def cancel_event(self, details):
     with self.database as db:
       db.execute('''UPDATE bookings SET Event_status = Cancelled
-        WHERE WHERE (User_name = ? AND Phone_no = ? AND Event_name = ? AND Event_status = ?)''', details)
+        WHERE (User_name = ? AND Phone_no = ? AND Event_name = ? AND Event_status = ?)''', details)
     print('EVENT CANCELLED SUCCESSFULLY')
 
   # VIEW ALL BOOKINGS IN TABLE
   def view_all(self):
     with self.database as db:
       entries = db.execute('SELECT * FROM bookings').fetchall()
+    return entries
+
+  # MADE THIS FUNCTION CAUSE I WAS TIRED OF REPEATING QUERIES
+  def dynamic_query(self, args, param):
+    with self.database as db:
+      entries = db.execute(f'SELECT * FROM bookings WHERE {args}', param).fetchall()
     return entries
