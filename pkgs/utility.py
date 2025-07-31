@@ -32,6 +32,3 @@ class Utility:
     for key,value in zip(label, details):
       output += f"{key.upper()}: {value}\n"
     return output
-  
-  # def shuffle_edit(self, details):
-  #   return (details[3], details[4], details[5], details[0], details[1], details[2], details[6])
