@@ -1,3 +1,4 @@
+import tabulate
 
 class Utility:
 
@@ -46,3 +47,18 @@ class Utility:
     else: 
         print('CANCELLING PROCESSES...')
         return False
+
+  # CREATE TABLE
+  def table_view(self, data_list, index=0):
+    headers = ['USERNAME', 'PHONE NUMBER', 'EVENT NAME', 'DATE', 'TIME SLOT', 'HALL NUMBER', 'EVENT STATUS'][index:]
+    temp_data_list = list()
+
+    for data in data_list:
+      temp_data = list(data)[index:]
+      temp_data_list.append(temp_data)
+    return tabulate.tabulate(temp_data_list, headers, "grid")
+
+  # ASK TO USE TABLE VIEW
+  def ask_table(self, data_list):
+    prompt = "DO YOU WANT TO VIEW AS TABLE?"
+    if self.proceed(prompt): print(f'\n{self.table_view(data_list, 2)}')

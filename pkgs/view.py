@@ -16,6 +16,8 @@ class View():
       print(self.privacy_warninng)
       entries = event.view_all()
       print(utility.gen_mainifest_list(entries))
+
+      utility.ask_table(entries)
   
   def view_by_hall(self):
     while True:
@@ -24,10 +26,47 @@ class View():
       if utility.proceed(self.caution_prompt(f'FILTER ENTRIES BY HALL NUMBER [{hall_no}]')):
         print(self.privacy_warninng)
         args = "Hall_no = ?"
-        entries = event.dynamic_query(args, (hall_no))
+        entries = event.dynamic_query(args, (hall_no,))
         print(utility.gen_mainifest_list(entries))
+        
+        utility.ask_table(entries)
         break
-      
+
+      else:
+        if utility.ask_again(): continue
+        else: return
+
+  def view_by_time(self):
+    while True:
+      time_slot = booking.get_time_slot()
+
+      if utility.proceed(self.caution_prompt(f'FILTER ENTRIES BY TIME SLOT [{time_slot}]')):
+          print(self.privacy_warninng)
+          args = "Time_slot = ?"
+          entries = event.dynamic_query(args, (time_slot,))
+          print(utility.gen_mainifest_list(entries))
+          
+          utility.ask_table(entries)
+          break
+        
+      else:
+        if utility.ask_again(): continue
+        else: return
+
+  def view_by_date(self):
+    while True:
+      date = booking.get_date()
+
+      if utility.proceed(self.caution_prompt(f'FILTER ENTRIES BY DATE [{date}]')):
+          print(self.privacy_warninng)
+          args = "Date = ?"
+          entries = event.dynamic_query(args, (date,))
+          print(utility.gen_mainifest_list(entries))
+          
+          
+          utility.ask_table(entries)
+          break
+        
       else:
         if utility.ask_again(): continue
         else: return

@@ -121,7 +121,8 @@ def Cancel_booking():
     else:
       print('CANCELLING PROCESSES...')
       return
-  
+
+# VIEW BOOKING MENU
 def View_booking():
   prompt_1 = '''
     1. VIEW ALL
@@ -135,7 +136,9 @@ def View_booking():
 
   choice = Utility.option_menu(options, prompt_1, prompt_2)
   if choice == '1': View.view_all_entries()
-  elif choice == '2': print('FILTER BY DATE')
-  elif choice == '3': print('FILTER BY TIME SLOT')
+  elif choice == '2': View.view_by_date()
+  elif choice == '3': View.view_by_time()
   elif choice == '4': View.view_by_hall()
-  else: return
+  else: 
+    print('CANCELLING OPERATIONS...')
+    return
